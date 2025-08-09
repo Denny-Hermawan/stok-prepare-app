@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// Set environment untuk Vercel
+$_ENV['VERCEL'] = true;
+
 // Require the Composer autoloader
 require __DIR__ . '/../vendor/autoload.php';
 
