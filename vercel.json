@@ -1,0 +1,22 @@
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "public/index.php",
+      "use": "vercel-php@0.6.0"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.php"
+    }
+  ]
+}
+```
+*File ini memberitahu Vercel untuk menggunakan `vercel-php`, sebuah community runtime yang menyediakan lingkungan PHP.*
