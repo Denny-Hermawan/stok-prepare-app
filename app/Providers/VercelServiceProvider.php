@@ -30,7 +30,7 @@ class VercelServiceProvider extends ServiceProvider
     private function configureForVercel(): void
     {
         // Set storage path to /tmp
-        $this->app->useStoragePath('/tmp');
+        $this->app->instance('path.storage', '/tmp');
 
         // Create necessary directories
         $this->createDirectories([
