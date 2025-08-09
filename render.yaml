@@ -1,0 +1,58 @@
+databases:
+  - name: stok-prepare-db
+    databaseName: stok_prepare
+    user: stok_prepare_user
+
+services:
+  - type: web
+    name: stok-prepare-app
+    env: php
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:cache
+      php artisan route:cache
+      php artisan view:cache
+      npm install
+      npm run build
+    startCommand: |
+      php artisan migrate --force
+      php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_NAME
+        value: "Stok Prepare App"
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://your-app-name.onrender.com
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: stok-prepare-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: stok-prepare-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: stok-prepare-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: stok-prepare-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: stok-prepare-db
+          property: password
+      - key: SESSION_DRIVER
+        value: file
+      - key: CACHE_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
