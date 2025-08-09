@@ -6,14 +6,18 @@
             "use": "vercel-php@0.6.0"
         },
         {
-            "src": "api/debug.php",
-            "use": "vercel-php@0.6.0"
+            "src": "public/**",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
-            "src": "/debug",
-            "dest": "/api/debug.php"
+            "src": "/api/(.*)",
+            "dest": "/api/$1"
+        },
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
         },
         {
             "src": "/css/(.*)",
@@ -24,8 +28,25 @@
             "dest": "/public/js/$1"
         },
         {
+            "src": "/images/(.*)",
+            "dest": "/public/images/$1"
+        },
+        {
+            "src": "/storage/(.*)",
+            "dest": "/public/storage/$1"
+        },
+        {
             "src": "/(.*)",
-            "dest": "/api/index.php"
+            "dest": "/api/index.php?/$1"
         }
-    ]
+    ],
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.6.0"
+        }
+    },
+    "env": {
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "VIEW_COMPILED_PATH": "/tmp"
+    }
 }
