@@ -1,19 +1,17 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "public/index.php",
-      "use": "vercel-php@0.6.0"
+    "version": 2,
+    "functions": {
+        "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://stok-prepare.vercel.app"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/public/index.php"
-    }
-  ]
 }
